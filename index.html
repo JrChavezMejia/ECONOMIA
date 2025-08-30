@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Economía Política — Programa 2025</title>
+<meta name="description" content="Programa interactivo del curso de Economía Política 2025 con videos, recursos IA y progreso estudiantil."/>
+<style>
+  :root{
+    /* Paleta tipo Facebook */
+    --brand-600:#1877F2; /* primario */
+    --brand-700:#1B74E4; /* hover */
+    --bg-app:#F0F2F5;    /* fondo */
+    --card:#FFFFFF;      /* tarjeta */
+    --border:#E4E6EB;    /* borde suave */
+    --text:#050505;      /* texto principal */
+    --muted:#65676B;     /* texto secundario */
+    --success:#42B72A;
+    --warning:#F0AD4E;
+    --danger:#E53935;
+    --shadow:0 6px 18px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg-app);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--brand-600);text-decoration:none}
+  a:hover{color:var(--brand-700)}
+  /* Header */
+  .appbar{position:sticky;top:0;z-index:50;background:#fff;box-shadow:var(--shadow)}
+  .appbar-inner{max-width:1100px;margin:auto;display:flex;gap:12px;align-items:center;padding:10px 16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand-600)}
+  .brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:var(--brand-600);color:#fff;font-weight:900}
+  nav{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{appearance:none;border:1px solid var(--border);background:#fff;color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer;transition:.2s;box-shadow:none}
+  .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+  .btn.primary{background:var(--brand-600);color:#fff;border-color:var(--brand-600)}
+  .btn.primary:hover{background:var(--brand-700)}
+  .btn.success{background:var(--success);color:#fff;border-color:transparent}
+  .btn.ghost{background:#fff}
+  .btn.small{padding:6px 10px;font-size:.9rem}
+
+  /* Hero */
+  .hero{max-width:1100px;margin:18px auto;padding:12px 16px}
+  .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}
+  .card .pad{padding:14px 16px}
+  .muted{color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .chip{background:#fff;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:.88rem}
+
+  /* Filtros + progreso */
+  .toolbar{position:sticky;top:66px;z-index:40;background:var(--bg-app);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .toolbar-inner{max-width:1100px;margin:auto;display:flex;gap:10px;align-items:center;padding:8px 16px}
+  .search{flex:1;display:flex;gap:8px}
+  .search input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#fff}
+  .progress{display:flex;align-items:center;gap:10px}
+  .meter{width:180px;height:10px;background:#e9eef6;border-radius:999px;overflow:hidden}
+  .meter>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand-600),#60a5fa)}
+  .tiny{font-size:.85rem}
+
+  /* Tabs */
+  .tabs{max-width:1100px;margin:14px auto;padding:0 16px}
+  .tablist{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#fff;cursor:pointer}
+  .tab[aria-selected="true"]{background:var(--brand-600);border-color:var(--brand-600);color:#fff}
+
+  /* Listado de sesiones */
+  .grid{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:840px){.hero-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+  .session{display:flex;flex-direction:column;gap:8px}
+  .session .hdr{display:flex;justify-content:space-between;gap:10px;align-items:center}
+  .badge{padding:3px 8px;border-radius:999px;border:1px solid var(--border);font-size:.78rem;color:var(--muted)}
+  .badge.eval{background:#fff3cd;border-color:#ffecb5;color:#9a6f00}
+  .badge.points{background:#e8f5e9;border-color:#c8e6c9;color:#2e7d32}
+  .meta{display:flex;gap:8px;flex-wrap:wrap}
+  .actions{display:flex;gap:6px;flex-wrap:wrap}
+  .accordion{border-top:1px dashed var(--border);padding-top:8px}
+  details{border:1px solid var(--border);border-radius:10px;background:#fff}
+  details+details{margin-top:8px}
+  summary{cursor:pointer;padding:8px 12px}
+  .acc-body{padding:8px 12px;border-top:1px dashed var(--border)}
+
+  /* Timeline */
+  .timeline{max-width:1100px;margin:22px auto;padding:0 16px}
+  .tl{display:flex;gap:16px;flex-wrap:wrap}
+  .tl .dot{background:var(--brand-600);color:#fff;border-radius:12px;padding:8px 12px;box-shadow:var(--shadow)}
+  .tl .dot.eval{background:#8b5cf6}
+
+  /* Modal video */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px}
+  .modal.open{display:flex}
+  .modal-card{width:min(920px,100%);background:#000;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .modal-head{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#111;color:#fff}
+  .modal-body{position:relative;padding-top:56.25%}
+  .modal-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+  /* Footer */
+  footer{max-width:1100px;margin:28px auto;padding:12px 16px;color:var(--muted)}
+</style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="appbar" role="banner">
+    <div class="appbar-inner">
+      <div class="brand"><span class="logo">EC</span> Economía Política — Programa 2025</div>
+      <nav aria-label="Principal">
+        <a class="btn ghost small" href="#programa">Programa</a>
+        <a class="btn ghost small" href="#evaluaciones">Evaluaciones</a>
+        <a class="btn ghost small" href="#recursos">Recursos</a>
+        <a class="btn primary small" target="_blank" rel="noopener" href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e">Asistente IA (NotebookLM)</a>
+        <a class="btn small" target="_blank" rel="noopener" href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs">Habla con Adam Smith</a>
+        <a class="btn success small" target="_blank" rel="noopener" href="https://curipod.com/6e768639-0c4a-4d2a-89d5-2c391c3bb543/games/54f03a73-af9c-44c5-8926-0898f1699c30/live">Actividad Curipod</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="card"><div class="pad">
+        <h1 style="margin:6px 0 4px">Bienvenidos/as</h1>
+        <p class="muted">Este sitio presenta el <strong>programa interactivo</strong> del curso, con sesiones por unidad, videos incrustados, lecturas y apoyo con IA. Usa la búsqueda, los filtros y marca tus avances.</p>
+        <div class="chips">
+          <span class="chip">Diseño tipo Facebook</span>
+          <span class="chip">Videos YouTube integrados</span>
+          <span class="chip">NotebookLM & Adam Smith</span>
+          <span class="chip">Progreso guardado</span>
+        </div>
+      </div></div>
+      <div class="card"><div class="pad">
+        <h3 style="margin:6px 0">Resumen del curso</h3>
+        <ul class="muted" style="margin:0 0 8px 18px">
+          <li>Unidades I–V (julio–noviembre de 2025)</li>
+          <li>Evaluaciones: 23/08, 04/10, 25/10, 22/11</li>
+          <li>Ponderación total: 100 puntos</li>
+        </ul>
+        <div class="chips">
+          <span class="chip">Clases</span>
+          <span class="chip">Talleres</span>
+          <span class="chip">Evaluaciones</span>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="search">
+        <input id="q" type="search" placeholder="Buscar por tema, actividad, unidad o fecha (ej. 'Balanza de pagos', '11/10/2025')" aria-label="Buscar"/>
+        <button class="btn" id="btnClear">Limpiar</button>
+      </div>
+      <div class="progress" aria-live="polite">
+        <div class="meter" aria-label="Progreso del curso"><i id="meterFill"></i></div>
+        <span class="tiny" id="progressLabel">0/0 sesiones vistas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS + SESIONES -->
+  <main id="programa" class="tabs" role="main">
+    <div role="tablist" aria-label="Unidades" class="tablist" id="tablist"></div>
+    <section id="sessions" class="grid" aria-live="polite"></section>
+  </main>
+
+  <!-- TIMELINE -->
+  <section id="evaluaciones" class="timeline">
+    <h2>Fechas de evaluación</h2>
+    <div class="tl" id="timeline"></div>
+  </section>
+
+  <!-- RECURSOS -->
+  <section id="recursos" class="tabs">
+    <h2>Recursos</h2>
+    <div class="grid">
+      <div class="card"><div class="pad">
+        <h3>Asistente de estudio con IA (NotebookLM)</h3>
+        <p class="muted">Explora resúmenes, mapas de ideas y preguntas guiadas. Úsalo como apoyo; verifica siempre en fuentes académicas.</p>
+        <a class="btn primary" target="_blank" rel="noopener" href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e">Abrir NotebookLM</a>
+      </div></div>
+      <div class="card"><div class="pad">
+        <h3>Conversación con Adam Smith (IA)</h3>
+        <p class="muted">Chatea con una recreación IA de Adam Smith para profundizar ideas como mercado y mano invisible.</p>
+        <a class="btn" target="_blank" rel="noopener" href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs">Habla con Adam Smith</a>
+      </div></div>
+      <div class="card"><div class="pad">
+        <h3>Actividad interactiva (Curipod)</h3>
+        <p class="muted">Juego/actividad para reforzar conceptos de clase con participación activa.</p>
+        <a class="btn success" target="_blank" rel="noopener" href="https://curipod.com/6e768639-0c4a-4d2a-89d5-2c391c3bb543/games/54f03a73-af9c-44c5-8926-0898f1699c30/live">Abrir Curipod</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- MODAL VIDEO -->
+  <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <strong id="videoTitle">Recurso en video</strong>
+        <button class="btn small" id="closeModal" aria-label="Cerrar">Cerrar ✕</button>
+      </div>
+      <div class="modal-body"><iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Dr. José Chávez — Programa de Economía Política. Diseño interactivo con colores tipo Facebook. Este sitio guarda tu progreso en tu dispositivo (localStorage).</p>
+  </footer>
+
+<script>
+// ======================
+// Datos del programa
+// ======================
+const DATA = {
+  title: "Economía Política — Programa 2025",
+  units: [
+    {
+      id:"U1", name:"I. El objeto y el método de la economía", color:"#1877F2",
+      sessions:[
+        {date:"2025-07-19", title:"Presentación del programa, metodología, evaluación y normas", activity:"Presentación del programa, metodología, evaluación y normas", points:2,
+          videos:[
+            // ⚠️ Inserta aquí los IDs de YouTube (dos por sesión). Ejemplo de formato:
+            {label:"Video 1 — ¿Qué es la economía?", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Introducción al curso", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Programa del curso (PDF)", url:"#"}],
+          glossary:["Economía","Necesidades","Escasez","Elección"]
+        },
+        {date:"2025-07-26", title:"Concepto y objeto de la economía. Corrientes fundamentales", activity:"Exploración guiada y diálogo inicial con lluvia de ideas", points:2,
+          videos:[
+            {label:"Video 1 — Escuelas del pensamiento económico", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Historia del pensamiento económico", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Lectura breve — Corrientes", url:"#"}],
+          glossary:["Clásica","Keynesiana","Austriaca","Neoclásica"]
+        },
+        {date:"2025-08-02", title:"Método de la economía política. Relación con otras disciplinas", activity:"Glosario colaborativo y debate en grupos", points:2,
+          videos:[
+            {label:"Video 1 — Método de la economía política", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Economía y otras ciencias", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Metodología — apuntes", url:"#"}],
+          glossary:["Método","Modelo","Hipótesis","Validación"]
+        }
+      ]
+    },
+    {
+      id:"U2", name:"II. Ramas de la economía", color:"#1B74E4",
+      sessions:[
+        {date:"2025-08-09", title:"Economía positiva y normativa. Microeconomía: oferta y demanda", activity:"Resolución de problemas con simulaciones económicas", points:2,
+          videos:[
+            {label:"Video 1 — Positiva vs. normativa", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Oferta y demanda", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Guía de ejercicios", url:"#"}],
+          glossary:["Oferta","Demanda","Equilibrio","Elasticidad"]
+        },
+        {date:"2025-08-16", title:"Macroeconomía: cuentas nacionales, ciclos económicos, balanza de pagos", activity:"Análisis de datos reales y discusión en plenaria", points:2,
+          videos:[
+            {label:"Video 1 — ¿Qué es el PIB?", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Ciclos económicos", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Apuntes de macro", url:"#"}],
+          glossary:["PIB","Ciclo","Balanza de pagos","Inflación"]
+        },
+        {date:"2025-08-23", title:"Primera Evaluación Parcial", activity:"Evaluación", points:20, eval:true, videos:[], readings:[], glossary:[]},
+        {date:"2025-08-30", title:"Economía internacional, globalización, política económica", activity:"Evaluación parcial con preguntas de aplicación y reflexión", points:2,
+          videos:[
+            {label:"Video 1 — Globalización", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Política económica", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Lectura — Globalización", url:"#"}],
+          glossary:["Apertura","Arancel","Tipo de cambio","Flujos de capital"]
+        }
+      ]
+    },
+    {
+      id:"U3", name:"III. La teoría monetaria", color:"#0e5fd4",
+      sessions:[
+        {date:"2025-09-06", title:"Origen, esencia, funciones del dinero", activity:"Mapa conceptual colaborativo y síntesis comparativa", points:2,
+          videos:[
+            {label:"Video 1 — Historia del dinero", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Funciones del dinero", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Funciones del dinero — notas", url:"#"}],
+          glossary:["Dinero","Medio de cambio","Unidad de cuenta","Reserva de valor"]
+        },
+        {date:"2025-09-13", title:"Dinero y precios. Sistema financiero nacional", activity:"Análisis de noticias actuales y discusión orientada", points:2,
+          videos:[
+            {label:"Video 1 — Inflación explicada", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Sistema financiero (GT)", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Sistema financiero — guía breve", url:"#"}],
+          glossary:["Inflación","Tasa de interés","Banco central","Intermediación"]
+        },
+        {date:"2025-09-20", title:"Finanzas públicas. Organismos financieros internacionales", activity:"Línea del tiempo interactiva y trabajo grupal", points:2,
+          videos:[
+            {label:"Video 1 — Finanzas públicas", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — ¿Qué es el FMI?/BM?", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Ingreso/Gasto público — síntesis", url:"#"}],
+          glossary:["Presupuesto","Déficit","Deuda pública","FMI"]
+        }
+      ]
+    },
+    {
+      id:"U4", name:"IV. Proceso económico", color:"#0b4fb0",
+      sessions:[
+        {date:"2025-09-27", title:"Producción, distribución, cambio y consumo (aspecto objetivo)", activity:"Estudio comparado entre países y presentación grupal", points:2,
+          videos:[
+            {label:"Video 1 — Proceso económico (P-D-C-C)", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Flujo circular", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Flujo circular — ficha", url:"#"}],
+          glossary:["Producción","Distribución","Cambio","Consumo"]
+        },
+        {date:"2025-10-04", title:"Segunda Evaluación Parcial", activity:"Evaluación", points:20, eval:true, videos:[], readings:[], glossary:[]},
+        {date:"2025-10-11", title:"Necesidades humanas, utilidad y valor (aspecto subjetivo)", activity:"Dramatización del proceso económico con recursos visuales", points:1,
+          videos:[
+            {label:"Video 1 — Utilidad y preferencias", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Utilidad marginal", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Valor/utilidad — notas", url:"#"}],
+          glossary:["Utilidad","Preferencias","Valor","Elección"]
+        },
+        {date:"2025-10-18", title:"Unidades III y IV: Teoría monetaria y proceso económico", activity:"Juego de roles para ilustrar la utilidad y preferencias", points:1,
+          videos:[
+            {label:"Video 1 — Repaso monetario", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Repaso proceso económico", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Síntesis III–IV", url:"#"}],
+          glossary:["Demanda de dinero","Costo de oportunidad","Roles económicos"]
+        }
+      ]
+    },
+    {
+      id:"U5", name:"V. Economía internacional y nacional", color:"#0a4397",
+      sessions:[
+        {date:"2025-10-25", title:"Economía internacional. Balanza de pagos. Globalización económica", activity:"Evaluación parcial con estudio de caso contextualizado", points:5,
+          videos:[
+            {label:"Video 1 — Balanza de pagos", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Globalización: pros y contras", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Balanza de pagos — guía", url:"#"}],
+          glossary:["Cuenta corriente","Cuenta capital","Tipo de cambio","Globalización"]
+        },
+        {date:"2025-11-01", title:"Día de todos los Santos", activity:"—", points:0, videos:[], readings:[], glossary:[]},
+        {date:"2025-11-08", title:"Desarrollo económico. Ciclos económicos", activity:"Foro de análisis con base en lecturas internacionales", points:2,
+          videos:[
+            {label:"Video 1 — Desarrollo vs. crecimiento", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Ciclos económicos (introducción)", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Indicadores de desarrollo — ficha", url:"#"}],
+          glossary:["IDH","Externalidades","Fases del ciclo","Política contracíclica"]
+        },
+        {date:"2025-11-15", title:"Implementación del proceso de paz", activity:"Examen final de integración teórica y contextual", points:5,
+          videos:[
+            {label:"Video 1 — Economía y paz social (contexto)", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+            {label:"Video 2 — Caso Guatemala (síntesis)", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
+          ],
+          readings:[{label:"Acuerdos de Paz — resumen", url:"#"}],
+          glossary:["Capital social","Instituciones","Paz positiva"]
+        },
+        {date:"2025-11-22", title:"Evaluación final", activity:"Evaluación final", points:30, eval:true, videos:[], readings:[], glossary:[]}
+      ]
+    }
+  ],
+  // Hitos de evaluaciones para la timeline
+  milestones:[
+    {date:"2025-08-23", label:"Primera evaluación parcial", type:"parcial"},
+    {date:"2025-10-04", label:"Segunda evaluación parcial", type:"parcial"},
+    {date:"2025-10-25", label:"Parcial (Unidad V)", type:"parcial"},
+    {date:"2025-11-22", label:"Evaluación final", type:"final"}
+  ]
+};
+
+// ======================
+// Utilidades
+// ======================
+const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('es-GT',{year:'numeric',month:'2-digit',day:'2-digit'});
+const uid = (...xs)=>xs.join('|');
+const PROG_KEY = 'economia2025-progress';
+
+function loadProgress(){
+  try{ return JSON.parse(localStorage.getItem(PROG_KEY)||'{}'); }catch{ return {}; }
+}
+function saveProgress(p){ localStorage.setItem(PROG_KEY, JSON.stringify(p)); }
+
+// ======================
+// Render de Tabs y Sesiones
+// ======================
+const tablist = document.getElementById('tablist');
+const sessionsEl = document.getElementById('sessions');
+let currentUnit = DATA.units[0].id;
+let progress = loadProgress();
+
+function renderTabs(){
+  tablist.innerHTML = '';
+  DATA.units.forEach((u,i)=>{
+    const b=document.createElement('button');
+    b.className='tab';
+    b.setAttribute('role','tab');
+    b.setAttribute('aria-selected', u.id===currentUnit ? 'true':'false');
+    b.textContent=u.name;
+    b.addEventListener('click', ()=>{ currentUnit=u.id; renderTabs(); renderSessions(); });
+    tablist.appendChild(b);
+  });
+}
+
+function renderSessions(){
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const unit = DATA.units.find(u=>u.id===currentUnit);
+  const matches = unit.sessions.filter(s=>{
+    const hay = (s.title+ ' ' + s.activity + ' ' + fmtDate(s.date)).toLowerCase();
+    return !q || hay.includes(q);
+  });
+  sessionsEl.innerHTML='';
+  matches.forEach(s=> sessionsEl.appendChild(SessionCard(unit,s)) );
+  updateProgressMeter();
+}
+
+function SessionCard(unit,s){
+  const card=document.createElement('article'); card.className='card session';
+  const pad=document.createElement('div'); pad.className='pad'; card.appendChild(pad);
+  const hdr=document.createElement('div'); hdr.className='hdr'; pad.appendChild(hdr);
+  const left=document.createElement('div');
+  left.innerHTML = `<strong>${fmtDate(s.date)}</strong> · ${s.title}`;
+  const right=document.createElement('div'); right.className='meta';
+  if(s.eval){ const b=document.createElement('span'); b.className='badge eval'; b.textContent='Evaluación'; right.appendChild(b); }
+  const p=document.createElement('span'); p.className='badge points'; p.textContent=`${s.points} pts`; right.appendChild(p);
+  hdr.append(left,right);
+
+  const act=document.createElement('div'); act.className='muted'; act.textContent = s.activity || '—'; pad.appendChild(act);
+
+  const actions=document.createElement('div'); actions.className='actions'; pad.appendChild(actions);
+  if((s.videos||[]).length){
+    const btnV=document.createElement('button'); btnV.className='btn primary small'; btnV.textContent='Ver videos';
+    btnV.addEventListener('click',()=> openVideoPicker(unit,s));
+    actions.appendChild(btnV);
+  }
+  const btnIA=document.createElement('button'); btnIA.className='btn small'; btnIA.textContent='Apoyo con IA';
+  btnIA.addEventListener('click',()=> openIA(unit,s));
+  actions.appendChild(btnIA);
+
+  if((s.readings||[]).length || (s.glossary||[]).length){
+    const wrap=document.createElement('div'); wrap.className='accordion'; pad.appendChild(wrap);
+    if((s.readings||[]).length){
+      const det=document.createElement('details');
+      const sum=document.createElement('summary'); sum.textContent='Lecturas sugeridas (PDF / enlaces)'; det.appendChild(sum);
+      const body=document.createElement('div'); body.className='acc-body';
+      body.innerHTML = (s.readings||[]).map(r=>`<div><a target="_blank" rel="noopener" href="${r.url}">• ${r.label}</a></div>`).join('');
+      det.appendChild(body); wrap.appendChild(det);
+    }
+    if((s.glossary||[]).length){
+      const det=document.createElement('details');
+      const sum=document.createElement('summary'); sum.textContent='Glosario de la sesión'; det.appendChild(sum);
+      const body=document.createElement('div'); body.className='acc-body';
+      body.innerHTML = `<ul style="margin:0 0 0 18px">${(s.glossary||[]).map(g=>`<li>${g}</li>`).join('')}</ul>`;
+      det.appendChild(body); wrap.appendChild(det);
+    }
+  }
+  return card;
+}
+
+// ======================
+// Video modal y picker (2 videos por sesión)
+// ======================
+const videoModal=document.getElementById('videoModal');
+const videoFrame=document.getElementById('videoFrame');
+const videoTitle=document.getElementById('videoTitle');
+const closeModal=document.getElementById('closeModal');
+
+function openVideoPicker(unit,s){
+  // Si hay dos videos, primero mostramos un mini selector sencillo
+  if((s.videos||[]).length>1){
+    const chooser = document.createElement('div');
+    chooser.style.padding='10px 12px';
+    chooser.style.background='#fff';
+    chooser.style.border='1px solid var(--border)';
+    chooser.style.borderRadius='10px';
+    chooser.style.marginBottom='8px';
+    chooser.innerHTML = `<strong>Selecciona un video:</strong> ` +
+      s.videos.map((v,i)=>`<button class="btn small" data-i="${i}" style="margin:6px 6px 0 0">${v.label||('Video '+(i+1))}</button>`).join('');
+
+    // Mostramos modal vacío y metemos el chooser arriba del iframe temporalmente
+    videoTitle.textContent = s.title;
+    videoFrame.src = '';
+    videoModal.classList.add('open');
+    const body = videoModal.querySelector('.modal-body');
+    body.style.paddingTop='0';
+    body.innerHTML = '';
+    const wrap = document.createElement('div'); wrap.style.background='#111'; wrap.style.color:'#fff'; wrap.style.padding='8px 12px'; wrap.textContent = ' '; // separador visual
+    body.appendChild(chooser);
+    body.appendChild(wrap);
+    const frame = document.createElement('iframe'); frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'; frame.allowFullscreen=true; frame.style.width='100%'; frame.style.height='60vh'; frame.style.border='0'; body.appendChild(frame);
+
+    chooser.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const i=Number(btn.dataset.i);
+        frame.src = s.videos[i].embed;
+        markSeen(unit,s,i);
+      });
+    });
+  }else{
+    openVideo(unit,s,0);
+  }
+}
+
+function openVideo(unit,s,i=0){
+  videoTitle.textContent = s.title;
+  videoFrame.src = (s.videos[i]||{}).embed || '';
+  videoModal.classList.add('open');
+  markSeen(unit,s,i);
+}
+
+function markSeen(unit,s,i){
+  const id = uid(unit.id, s.date, i);
+  progress[id] = true;
+  saveProgress(progress);
+  updateProgressMeter();
+}
+
+closeModal.addEventListener('click',()=>{
+  videoModal.classList.remove('open');
+  // limpiar iframe para detener reproducción
+  videoFrame.src='';
+  const body = videoModal.querySelector('.modal-body');
+  body.innerHTML = '<iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+});
+
+// ======================
+// Apoyo con IA (NotebookLM + Adam Smith)
+// ======================
+function openIA(unit,s){
+  const win = window.open('', '_blank');
+  if(!win){ alert('Permite ventanas emergentes para abrir los recursos IA.'); return; }
+  win.document.write(`<!DOCTYPE html><html lang=es><head><meta charset=utf-8><title>Apoyo con IA — ${s.title}</title></head><body style="font-family:system-ui;line-height:1.5;padding:16px"><h2>Apoyo con IA</h2><p>Usa estos recursos como complemento. Verifica siempre en fuentes académicas.</p><p><a href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e" target="_blank" rel="noopener">Abrir NotebookLM</a> · <a href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs" target="_blank" rel="noopener">Habla con Adam Smith</a></p><h3>Prompts sugeridos</h3><ul><li>Resume en 120 palabras los puntos clave de: ${s.title}.</li><li>Genera 3 preguntas para debate sobre: ${s.activity||'la sesión'}.</li></ul><p><a href="javascript:window.close()">Cerrar</a></p></body></html>`);
+}
+
+// ======================
+// Timeline
+// ======================
+function renderTimeline(){
+  const tl=document.getElementById('timeline');
+  tl.innerHTML='';
+  DATA.milestones.forEach(m=>{
+    const a=document.createElement('a'); a.className='dot '+(m.type==='final'?'eval':''); a.href='#programa'; a.textContent=`${fmtDate(m.date)} · ${m.label}`; tl.appendChild(a);
+  });
+}
+
+// ======================
+// Progreso
+// ======================
+function countTotalVideos(){
+  let total=0; DATA.units.forEach(u=>u.sessions.forEach(s=> total += (s.videos||[]).length)); return total;
+}
+function countSeen(){
+  return Object.values(progress).filter(Boolean).length;
+}
+function updateProgressMeter(){
+  const total=countTotalVideos();
+  const seen=countSeen();
+  document.getElementById('progressLabel').textContent = `${seen}/${total} videos vistos`;
+  const pct = total? Math.round((seen/total)*100) : 0;
+  document.getElementById('meterFill').style.width = pct+'%';
+}
+
+// ======================
+// Búsqueda
+// ======================
+const inputQ=document.getElementById('q');
+const btnClear=document.getElementById('btnClear');
+inputQ.addEventListener('input', ()=> renderSessions());
+btnClear.addEventListener('click', ()=>{ inputQ.value=''; renderSessions(); });
+
+// ======================
+// Init
+// ======================
+renderTabs();
+renderSessions();
+renderTimeline();
+updateProgressMeter();
+
+</script>
+</body>
+</html>
