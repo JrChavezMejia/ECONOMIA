@@ -6,139 +6,766 @@
 <title>Economía Política — Programa 2025</title>
 <meta name="description" content="Programa interactivo del curso de Economía Política 2025 con videos, recursos IA y progreso estudiantil."/>
 <style>
-  :root{
+  :root {
     /* Paleta tipo Facebook */
-    --brand-600:#1877F2; /* primario */
-    --brand-700:#1B74E4; /* hover */
-    --bg-app:#F0F2F5;    /* fondo */
-    --card:#FFFFFF;      /* tarjeta */
-    --border:#E4E6EB;    /* borde suave */
-    --text:#050505;      /* texto principal */
-    --muted:#65676B;     /* texto secundario */
-    --success:#42B72A;
-    --warning:#F0AD4E;
-    --danger:#E53935;
-    --shadow:0 6px 18px rgba(0,0,0,.08);
+    --brand-600: #1877F2;
+    --brand-700: #1B74E4;
+    --bg-app: #F0F2F5;
+    --card: #FFFFFF;
+    --border: #E4E6EB;
+    --text: #050505;
+    --muted: #65676B;
+    --success: #42B72A;
+    --warning: #F0AD4E;
+    --danger: #E53935;
+    --shadow: 0 6px 18px rgba(0,0,0,.08);
+    --radius: 14px;
+    --transition: all 0.3s ease;
+    
+    /* Modo oscuro */
+    --dark-bg: #18191A;
+    --dark-card: #242526;
+    --dark-text: #E4E6EB;
+    --dark-muted: #B0B3B8;
+    --dark-border: #3E4042;
   }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg-app);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-  a{color:var(--brand-600);text-decoration:none}
-  a:hover{color:var(--brand-700)}
+
+  /* Modo oscuro preferido por el sistema */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-app: var(--dark-bg);
+      --card: var(--dark-card);
+      --text: var(--dark-text);
+      --muted: var(--dark-muted);
+      --border: var(--dark-border);
+    }
+  }
+
+  .dark-mode {
+    --bg-app: var(--dark-bg);
+    --card: var(--dark-card);
+    --text: var(--dark-text);
+    --muted: var(--dark-muted);
+    --border: var(--dark-border);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    background: var(--bg-app);
+    color: var(--text);
+    font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    transition: var(--transition);
+    scroll-behavior: smooth;
+  }
+
+  a {
+    color: var(--brand-600);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  a:hover {
+    color: var(--brand-700);
+  }
+
+  h1, h2, h3, h4 {
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
   /* Header */
-  .appbar{position:sticky;top:0;z-index:50;background:#fff;box-shadow:var(--shadow)}
-  .appbar-inner{max-width:1100px;margin:auto;display:flex;gap:12px;align-items:center;padding:10px 16px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--brand-600)}
-  .brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:var(--brand-600);color:#fff;font-weight:900}
-  nav{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
-  .btn{appearance:none;border:1px solid var(--border);background:#fff;color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer;transition:.2s;box-shadow:none}
-  .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-  .btn.primary{background:var(--brand-600);color:#fff;border-color:var(--brand-600)}
-  .btn.primary:hover{background:var(--brand-700)}
-  .btn.success{background:var(--success);color:#fff;border-color:transparent}
-  .btn.ghost{background:#fff}
-  .btn.small{padding:6px 10px;font-size:.9rem}
+  .appbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--card);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+  }
+
+  .appbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 20px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    color: var(--brand-600);
+  }
+
+  .brand .logo {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--brand-600);
+    color: #fff;
+    font-weight: 900;
+    font-size: 18px;
+  }
+
+  nav {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+  }
+
+  .btn:hover, .btn:focus {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .btn.primary {
+    background: var(--brand-600);
+    color: #fff;
+    border-color: var(--brand-600);
+  }
+
+  .btn.primary:hover, .btn.primary:focus {
+    background: var(--brand-700);
+    border-color: var(--brand-700);
+  }
+
+  .btn.success {
+    background: var(--success);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .btn.ghost {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .btn.small {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .btn.icon {
+    padding: 8px;
+  }
 
   /* Hero */
-  .hero{max-width:1100px;margin:18px auto;padding:12px 16px}
-  .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}
-  .card .pad{padding:14px 16px}
-  .muted{color:var(--muted)}
-  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-  .chip{background:#fff;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:.88rem}
+  .hero {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 16px 20px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0,0,0,.12);
+  }
+
+  .card .pad {
+    padding: 20px;
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .chip {
+    background: var(--bg-app);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    transition: var(--transition);
+  }
+
+  .chip:hover {
+    background: var(--brand-600);
+    color: white;
+    border-color: var(--brand-600);
+  }
 
   /* Filtros + progreso */
-  .toolbar{position:sticky;top:66px;z-index:40;background:var(--bg-app);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .toolbar-inner{max-width:1100px;margin:auto;display:flex;gap:10px;align-items:center;padding:8px 16px}
-  .search{flex:1;display:flex;gap:8px}
-  .search input{flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#fff}
-  .progress{display:flex;align-items:center;gap:10px}
-  .meter{width:180px;height:10px;background:#e9eef6;border-radius:999px;overflow:hidden}
-  .meter>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand-600),#60a5fa)}
-  .tiny{font-size:.85rem}
+  .toolbar {
+    position: sticky;
+    top: 72px;
+    z-index: 90;
+    background: var(--bg-app);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+  }
+
+  .toolbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 20px;
+    flex-wrap: wrap;
+  }
+
+  .search {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    min-width: 250px;
+  }
+
+  .search input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+
+  .search input:focus {
+    outline: none;
+    border-color: var(--brand-600);
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+  }
+
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .meter {
+    width: 200px;
+    height: 12px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .meter>i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--brand-600), #60a5fa);
+    border-radius: 999px;
+    transition: width 0.8s ease;
+  }
+
+  .meter-text {
+    font-size: 0.85rem;
+    min-width: 120px;
+    text-align: right;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    transition: var(--transition);
+  }
+
+  .theme-toggle:hover {
+    background: var(--border);
+  }
 
   /* Tabs */
-  .tabs{max-width:1100px;margin:14px auto;padding:0 16px}
-  .tablist{display:flex;gap:8px;flex-wrap:wrap}
-  .tab{padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#fff;cursor:pointer}
-  .tab[aria-selected="true"]{background:var(--brand-600);border-color:var(--brand-600);color:#fff}
+  .tabs {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+
+  .tablist {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .tab {
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+  }
+
+  .tab:hover, .tab:focus {
+    background: var(--bg-app);
+  }
+
+  .tab[aria-selected="true"] {
+    background: var(--brand-600);
+    border-color: var(--brand-600);
+    color: #fff;
+  }
 
   /* Listado de sesiones */
-  .grid{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media (max-width:840px){.hero-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
-  .session{display:flex;flex-direction:column;gap:8px}
-  .session .hdr{display:flex;justify-content:space-between;gap:10px;align-items:center}
-  .badge{padding:3px 8px;border-radius:999px;border:1px solid var(--border);font-size:.78rem;color:var(--muted)}
-  .badge.eval{background:#fff3cd;border-color:#ffecb5;color:#9a6f00}
-  .badge.points{background:#e8f5e9;border-color:#c8e6c9;color:#2e7d32}
-  .meta{display:flex;gap:8px;flex-wrap:wrap}
-  .actions{display:flex;gap:6px;flex-wrap:wrap}
-  .accordion{border-top:1px dashed var(--border);padding-top:8px}
-  details{border:1px solid var(--border);border-radius:10px;background:#fff}
-  details+details{margin-top:8px}
-  summary{cursor:pointer;padding:8px 12px}
-  .acc-body{padding:8px 12px;border-top:1px dashed var(--border)}
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .toolbar-inner {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .search {
+      width: 100%;
+    }
+    
+    .progress {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .appbar-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    nav {
+      margin-left: 0;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .card .pad {
+      padding: 16px;
+    }
+  }
+
+  .session {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+  }
+
+  .session .hdr {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .badge {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .badge.eval {
+    background: #fff3cd;
+    border-color: #ffecb5;
+    color: #9a6f00;
+  }
+
+  .badge.points {
+    background: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+  }
+
+  .meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .accordion {
+    border-top: 1px dashed var(--border);
+    padding-top: 12px;
+    margin-top: 8px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  details[open] {
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  }
+
+  summary {
+    cursor: pointer;
+    padding: 12px 16px;
+    font-weight: 500;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:after {
+    content: '►';
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+  }
+
+  details[open] summary:after {
+    transform: rotate(90deg);
+  }
+
+  summary:hover {
+    background: var(--bg-app);
+  }
+
+  .acc-body {
+    padding: 12px 16px;
+    border-top: 1px dashed var(--border);
+  }
 
   /* Timeline */
-  .timeline{max-width:1100px;margin:22px auto;padding:0 16px}
-  .tl{display:flex;gap:16px;flex-wrap:wrap}
-  .tl .dot{background:var(--brand-600);color:#fff;border-radius:12px;padding:8px 12px;box-shadow:var(--shadow)}
-  .tl .dot.eval{background:#8b5cf6}
+  .timeline {
+    max-width: 1200px;
+    margin: 32px auto;
+    padding: 0 20px;
+  }
+
+  .tl {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .tl .dot {
+    background: var(--brand-600);
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .tl .dot:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(24, 119, 242, 0.3);
+  }
+
+  .tl .dot.eval {
+    background: #8b5cf6;
+  }
 
   /* Modal video */
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px}
-  .modal.open{display:flex}
-  .modal-card{width:min(920px,100%);background:#000;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
-  .modal-head{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#111;color:#fff}
-  .modal-body{position:relative;padding-top:56.25%}
-  .modal-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-card {
+    width: min(920px, 100%);
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,.4);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+
+  .modal.open .modal-card {
+    transform: scale(1);
+  }
+
+  .modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #111;
+    color: #fff;
+  }
+
+  .modal-body {
+    position: relative;
+    padding-top: 56.25%;
+  }
+
+  .modal-body iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
 
   /* Footer */
-  footer{max-width:1100px;margin:28px auto;padding:12px 16px;color:var(--muted)}
+  footer {
+    max-width: 1200px;
+    margin: 40px auto 20px;
+    padding: 20px;
+    color: var(--muted);
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Loading animation */
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+    height: 1em;
+  }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Filtro de unidades */
+  .filter-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .filter-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+  }
+
+  /* Notificación */
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .notification.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .notification.success {
+    border-left: 4px solid var(--success);
+  }
+
+  .notification.error {
+    border-left: 4px solid var(--danger);
+  }
+
+  /* Mejora para el selector de video */
+  .video-chooser {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px;
+    background: #1a1a1a;
+  }
+
+  @media (max-width: 640px) {
+    .video-chooser {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .video-option {
+    padding: 12px;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+  }
+
+  .video-option:hover {
+    background: #3a3a3a;
+    border-color: var(--brand-600);
+  }
 </style>
 </head>
 <body>
   <!-- HEADER -->
   <header class="appbar" role="banner">
     <div class="appbar-inner">
-      <div class="brand"><span class="logo">EC</span> Economía Política — Programa 2025</div>
-      <nav aria-label="Principal">
+      <div class="brand" role="heading" aria-level="1">
+        <span class="logo" aria-hidden="true">EC</span> 
+        <span>Economía Política — Programa 2025</span>
+      </div>
+      <nav aria-label="Navegación principal">
         <a class="btn ghost small" href="#programa">Programa</a>
         <a class="btn ghost small" href="#evaluaciones">Evaluaciones</a>
         <a class="btn ghost small" href="#recursos">Recursos</a>
-        <a class="btn primary small" target="_blank" rel="noopener" href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e">Asistente IA (NotebookLM)</a>
-        <a class="btn small" target="_blank" rel="noopener" href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs">Habla con Adam Smith</a>
-        <a class="btn success small" target="_blank" rel="noopener" href="https://curipod.com/6e768639-0c4a-4d2a-89d5-2c391c3bb543/games/54f03a73-af9c-44c5-8926-0898f1699c30/live">Actividad Curipod</a>
+        <a class="btn primary small" target="_blank" rel="noopener" href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e">
+          <span aria-hidden="true">🤖</span> Asistente IA
+        </a>
+        <a class="btn small" target="_blank" rel="noopener" href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs">
+          <span aria-hidden="true">👤</span> Adam Smith
+        </a>
+        <button class="btn icon theme-toggle" id="themeToggle" aria-label="Cambiar modo claro/oscuro">
+          <span aria-hidden="true">🌙</span>
+        </button>
       </nav>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" aria-labelledby="hero-title">
     <div class="hero-grid">
-      <div class="card"><div class="pad">
-        <h1 style="margin:6px 0 4px">Bienvenidos/as</h1>
-        <p class="muted">Este sitio presenta el <strong>programa interactivo</strong> del curso, con sesiones por unidad, videos incrustados, lecturas y apoyo con IA. Usa la búsqueda, los filtros y marca tus avances.</p>
-        <div class="chips">
-          <span class="chip">Diseño tipo Facebook</span>
-          <span class="chip">Videos YouTube integrados</span>
-          <span class="chip">NotebookLM & Adam Smith</span>
-          <span class="chip">Progreso guardado</span>
+      <div class="card">
+        <div class="pad">
+          <h1 id="hero-title">Bienvenidos/as</h1>
+          <p class="muted">Este sitio presenta el <strong>programa interactivo</strong> del curso, con sesiones por unidad, videos incrustados, lecturas y apoyo con IA. Usa la búsqueda, los filtros y marca tus avances.</p>
+          <div class="chips">
+            <span class="chip">Diseño moderno y accesible</span>
+            <span class="chip">Videos YouTube integrados</span>
+            <span class="chip">NotebookLM & Adam Smith</span>
+            <span class="chip">Progreso guardado</span>
+            <span class="chip">Modo oscuro</span>
+          </div>
         </div>
-      </div></div>
-      <div class="card"><div class="pad">
-        <h3 style="margin:6px 0">Resumen del curso</h3>
-        <ul class="muted" style="margin:0 0 8px 18px">
-          <li>Unidades I–V (julio–noviembre de 2025)</li>
-          <li>Evaluaciones: 23/08, 04/10, 25/10, 22/11</li>
-          <li>Ponderación total: 100 puntos</li>
-        </ul>
-        <div class="chips">
-          <span class="chip">Clases</span>
-          <span class="chip">Talleres</span>
-          <span class="chip">Evaluaciones</span>
+      </div>
+      <div class="card">
+        <div class="pad">
+          <h2>Resumen del curso</h2>
+          <ul class="muted" style="margin:0 0 12px 22px">
+            <li>Unidades I–V (julio–noviembre de 2025)</li>
+            <li>Evaluaciones: 23/08, 04/10, 25/10, 22/11</li>
+            <li>Ponderación total: 100 puntos</li>
+          </ul>
+          <div class="chips">
+            <span class="chip">Clases</span>
+            <span class="chip">Talleres</span>
+            <span class="chip">Evaluaciones</span>
+          </div>
         </div>
-      </div></div>
+      </div>
     </div>
   </section>
 
@@ -146,47 +773,88 @@
   <div class="toolbar">
     <div class="toolbar-inner">
       <div class="search">
-        <input id="q" type="search" placeholder="Buscar por tema, actividad, unidad o fecha (ej. 'Balanza de pagos', '11/10/2025')" aria-label="Buscar"/>
-        <button class="btn" id="btnClear">Limpiar</button>
+        <input id="q" type="search" placeholder="Buscar por tema, actividad, unidad o fecha (ej. 'Balanza de pagos', '11/10/2025')" aria-label="Buscar en el programa"/>
+        <button class="btn" id="btnClear" aria-label="Limpiar búsqueda">Limpiar</button>
       </div>
       <div class="progress" aria-live="polite">
-        <div class="meter" aria-label="Progreso del curso"><i id="meterFill"></i></div>
-        <span class="tiny" id="progressLabel">0/0 sesiones vistas</span>
+        <div class="meter" aria-label="Progreso del curso">
+          <i id="meterFill"></i>
+        </div>
+        <span class="meter-text" id="progressLabel">0/0 sesiones vistas</span>
       </div>
+      <button class="btn small" id="resetProgress" aria-label="Reiniciar progreso">Reiniciar progreso</button>
     </div>
   </div>
 
   <!-- TABS + SESIONES -->
-  <main id="programa" class="tabs" role="main">
-    <div role="tablist" aria-label="Unidades" class="tablist" id="tablist"></div>
+  <main id="programa" class="tabs" role="main" aria-labelledby="programa-title">
+    <h2 id="programa-title" style="margin-bottom: 20px;">Programa del curso</h2>
+    
+    <div class="filter-controls">
+      <span class="filter-label">Filtrar por unidad:</span>
+      <select class="filter-select" id="unitFilter" aria-label="Filtrar por unidad">
+        <option value="all">Todas las unidades</option>
+      </select>
+      
+      <span class="filter-label" style="margin-left: 16px;">Ordenar por:</span>
+      <select class="filter-select" id="sortFilter" aria-label="Ordenar sesiones">
+        <option value="date">Fecha (más antiguo primero)</option>
+        <option value="date-desc">Fecha (más reciente primero)</option>
+        <option value="points">Puntos (menor a mayor)</option>
+        <option value="points-desc">Puntos (mayor a menor)</option>
+      </select>
+    </div>
+    
+    <div role="tablist" aria-label="Unidades del curso" class="tablist" id="tablist"></div>
     <section id="sessions" class="grid" aria-live="polite"></section>
   </main>
 
   <!-- TIMELINE -->
-  <section id="evaluaciones" class="timeline">
-    <h2>Fechas de evaluación</h2>
+  <section id="evaluaciones" class="timeline" aria-labelledby="evaluaciones-title">
+    <h2 id="evaluaciones-title">Fechas de evaluación</h2>
     <div class="tl" id="timeline"></div>
   </section>
 
   <!-- RECURSOS -->
-  <section id="recursos" class="tabs">
-    <h2>Recursos</h2>
+  <section id="recursos" class="tabs" aria-labelledby="recursos-title">
+    <h2 id="recursos-title">Recursos</h2>
     <div class="grid">
-      <div class="card"><div class="pad">
-        <h3>Asistente de estudio con IA (NotebookLM)</h3>
-        <p class="muted">Explora resúmenes, mapas de ideas y preguntas guiadas. Úsalo como apoyo; verifica siempre en fuentes académicas.</p>
-        <a class="btn primary" target="_blank" rel="noopener" href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e">Abrir NotebookLM</a>
-      </div></div>
-      <div class="card"><div class="pad">
-        <h3>Conversación con Adam Smith (IA)</h3>
-        <p class="muted">Chatea con una recreación IA de Adam Smith para profundizar ideas como mercado y mano invisible.</p>
-        <a class="btn" target="_blank" rel="noopener" href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs">Habla con Adam Smith</a>
-      </div></div>
-      <div class="card"><div class="pad">
-        <h3>Actividad interactiva (Curipod)</h3>
-        <p class="muted">Juego/actividad para reforzar conceptos de clase con participación activa.</p>
-        <a class="btn success" target="_blank" rel="noopener" href="https://curipod.com/6e768639-0c4a-4d2a-89d5-2c391c3bb543/games/54f03a73-af9c-44c5-8926-0898f1699c30/live">Abrir Curipod</a>
-      </div></div>
+      <div class="card">
+        <div class="pad">
+          <h3>Asistente de estudio con IA (NotebookLM)</h3>
+          <p class="muted">Explora resúmenes, mapas de ideas y preguntas guiadas. Úsalo como apoyo; verifica siempre en fuentes académicas.</p>
+          <a class="btn primary" target="_blank" rel="noopener" href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e">
+            <span aria-hidden="true">📚</span> Abrir NotebookLM
+          </a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pad">
+          <h3>Conversación con Adam Smith (IA)</h3>
+          <p class="muted">Chatea con una recreación IA de Adam Smith para profundizar ideas como mercado y mano invisible.</p>
+          <a class="btn" target="_blank" rel="noopener" href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs">
+            <span aria-hidden="true">💬</span> Habla con Adam Smith
+          </a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pad">
+          <h3>Actividad interactiva (Curipod)</h3>
+          <p class="muted">Juego/actividad para reforzar conceptos de clase con participación activa.</p>
+          <a class="btn success" target="_blank" rel="noopener" href="https://curipod.com/6e768639-0c4a-4d2a-89d5-2c391c3bb543/games/54f03a73-af9c-44c5-8926-0898f1699c30/live">
+            <span aria-hidden="true">🎮</span> Abrir Curipod
+          </a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="pad">
+          <h3>Material adicional</h3>
+          <p class="muted">Accede a presentaciones, lecturas complementarias y otros recursos del curso.</p>
+          <button class="btn" disabled aria-disabled="true">
+            <span aria-hidden="true">📂</span> Próximamente
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -195,11 +863,16 @@
     <div class="modal-card">
       <div class="modal-head">
         <strong id="videoTitle">Recurso en video</strong>
-        <button class="btn small" id="closeModal" aria-label="Cerrar">Cerrar ✕</button>
+        <button class="btn small" id="closeModal" aria-label="Cerrar ventana de video">Cerrar ✕</button>
       </div>
-      <div class="modal-body"><iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="modal-body">
+        <iframe id="videoFrame" src="" title="Video de la sesión" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
+
+  <!-- NOTIFICATION -->
+  <div class="notification" id="notification" role="status" aria-live="polite"></div>
 
   <footer>
     <p>© 2025 Dr. José Chávez — Programa de Economía Política. Diseño interactivo con colores tipo Facebook. Este sitio guarda tu progreso en tu dispositivo (localStorage).</p>
@@ -217,7 +890,6 @@ const DATA = {
       sessions:[
         {date:"2025-07-19", title:"Presentación del programa, metodología, evaluación y normas", activity:"Presentación del programa, metodología, evaluación y normas", points:2,
           videos:[
-            // ⚠️ Inserta aquí los IDs de YouTube (dos por sesión). Ejemplo de formato:
             {label:"Video 1 — ¿Qué es la economía?", embed:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
             {label:"Video 2 — Introducción al curso", embed:"https://www.youtube.com/embed/oHg5SJYRHA0"}
           ],
@@ -375,210 +1047,564 @@ const DATA = {
 // ======================
 // Utilidades
 // ======================
-const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('es-GT',{year:'numeric',month:'2-digit',day:'2-digit'});
-const uid = (...xs)=>xs.join('|');
+const fmtDate = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('es-GT', {year: 'numeric', month: '2-digit', day: '2-digit'});
+const uid = (...xs) => xs.join('|');
 const PROG_KEY = 'economia2025-progress';
 
-function loadProgress(){
-  try{ return JSON.parse(localStorage.getItem(PROG_KEY)||'{}'); }catch{ return {}; }
+function loadProgress() {
+  try { 
+    return JSON.parse(localStorage.getItem(PROG_KEY) || '{}'); 
+  } catch { 
+    return {}; 
+  }
 }
-function saveProgress(p){ localStorage.setItem(PROG_KEY, JSON.stringify(p)); }
+
+function saveProgress(p) { 
+  localStorage.setItem(PROG_KEY, JSON.stringify(p)); 
+}
+
+function showNotification(message, type = 'success') {
+  const notification = document.getElementById('notification');
+  notification.textContent = message;
+  notification.className = `notification ${type} show`;
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+  }, 3000);
+}
 
 // ======================
 // Render de Tabs y Sesiones
 // ======================
 const tablist = document.getElementById('tablist');
 const sessionsEl = document.getElementById('sessions');
-let currentUnit = DATA.units[0].id;
+const unitFilter = document.getElementById('unitFilter');
+const sortFilter = document.getElementById('sortFilter');
+let currentUnit = "all";
 let progress = loadProgress();
 
-function renderTabs(){
-  tablist.innerHTML = '';
-  DATA.units.forEach((u,i)=>{
-    const b=document.createElement('button');
-    b.className='tab';
-    b.setAttribute('role','tab');
-    b.setAttribute('aria-selected', u.id===currentUnit ? 'true':'false');
-    b.textContent=u.name;
-    b.addEventListener('click', ()=>{ currentUnit=u.id; renderTabs(); renderSessions(); });
-    tablist.appendChild(b);
+function renderUnitFilter() {
+  unitFilter.innerHTML = '<option value="all">Todas las unidades</option>';
+  DATA.units.forEach(unit => {
+    const option = document.createElement('option');
+    option.value = unit.id;
+    option.textContent = unit.name;
+    unitFilter.appendChild(option);
   });
 }
 
-function renderSessions(){
+function renderTabs() {
+  tablist.innerHTML = '';
+  DATA.units.forEach(unit => {
+    const tab = document.createElement('button');
+    tab.className = 'tab';
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-selected', unit.id === currentUnit ? 'true' : 'false');
+    tab.textContent = unit.name;
+    tab.style.borderLeft = `4px solid ${unit.color}`;
+    tab.addEventListener('click', () => {
+      currentUnit = unit.id;
+      unitFilter.value = unit.id;
+      renderTabs();
+      renderSessions();
+    });
+    tablist.appendChild(tab);
+  });
+  
+  // Add "All" tab
+  const allTab = document.createElement('button');
+  allTab.className = 'tab';
+  allTab.setAttribute('role', 'tab');
+  allTab.setAttribute('aria-selected', currentUnit === "all" ? 'true' : 'false');
+  allTab.textContent = "Todas las unidades";
+  allTab.style.borderLeft = "4px solid var(--muted)";
+  allTab.addEventListener('click', () => {
+    currentUnit = "all";
+    unitFilter.value = "all";
+    renderTabs();
+    renderSessions();
+  });
+  tablist.insertBefore(allTab, tablist.firstChild);
+}
+
+function renderSessions() {
   const q = document.getElementById('q').value.trim().toLowerCase();
-  const unit = DATA.units.find(u=>u.id===currentUnit);
-  const matches = unit.sessions.filter(s=>{
-    const hay = (s.title+ ' ' + s.activity + ' ' + fmtDate(s.date)).toLowerCase();
+  const sortBy = sortFilter.value;
+  
+  // Get all sessions based on current filter
+  let sessions = [];
+  if (currentUnit === "all") {
+    DATA.units.forEach(unit => {
+      sessions.push(...unit.sessions.map(s => ({...s, unitId: unit.id, unitName: unit.name})));
+    });
+  } else {
+    const unit = DATA.units.find(u => u.id === currentUnit);
+    sessions = unit.sessions.map(s => ({...s, unitId: unit.id, unitName: unit.name}));
+  }
+  
+  // Filter by search query
+  const matches = sessions.filter(s => {
+    const hay = (s.title + ' ' + s.activity + ' ' + fmtDate(s.date) + ' ' + s.unitName).toLowerCase();
     return !q || hay.includes(q);
   });
-  sessionsEl.innerHTML='';
-  matches.forEach(s=> sessionsEl.appendChild(SessionCard(unit,s)) );
+  
+  // Sort sessions
+  matches.sort((a, b) => {
+    switch(sortBy) {
+      case 'date':
+        return new Date(a.date) - new Date(b.date);
+      case 'date-desc':
+        return new Date(b.date) - new Date(a.date);
+      case 'points':
+        return a.points - b.points;
+      case 'points-desc':
+        return b.points - a.points;
+      default:
+        return new Date(a.date) - new Date(b.date);
+    }
+  });
+  
+  sessionsEl.innerHTML = '';
+  if (matches.length === 0) {
+    sessionsEl.innerHTML = `
+      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px;">
+        <h3>No se encontraron sesiones</h3>
+        <p class="muted">Intenta con otros términos de búsqueda o cambia los filtros</p>
+      </div>
+    `;
+    return;
+  }
+  
+  matches.forEach(s => sessionsEl.appendChild(SessionCard(s)));
   updateProgressMeter();
 }
 
-function SessionCard(unit,s){
-  const card=document.createElement('article'); card.className='card session';
-  const pad=document.createElement('div'); pad.className='pad'; card.appendChild(pad);
-  const hdr=document.createElement('div'); hdr.className='hdr'; pad.appendChild(hdr);
-  const left=document.createElement('div');
+function SessionCard(s) {
+  const card = document.createElement('article'); 
+  card.className = 'card session';
+  card.dataset.unit = s.unitId;
+  card.dataset.date = s.date;
+  
+  const pad = document.createElement('div'); 
+  pad.className = 'pad'; 
+  card.appendChild(pad);
+  
+  // Unit badge
+  const unitBadge = document.createElement('div');
+  unitBadge.className = 'badge';
+  unitBadge.style.background = DATA.units.find(u => u.id === s.unitId)?.color + '20';
+  unitBadge.style.borderColor = DATA.units.find(u => u.id === s.unitId)?.color;
+  unitBadge.style.color = DATA.units.find(u => u.id === s.unitId)?.color;
+  unitBadge.textContent = s.unitName;
+  pad.appendChild(unitBadge);
+  
+  const hdr = document.createElement('div'); 
+  hdr.className = 'hdr'; 
+  pad.appendChild(hdr);
+  
+  const left = document.createElement('div');
   left.innerHTML = `<strong>${fmtDate(s.date)}</strong> · ${s.title}`;
-  const right=document.createElement('div'); right.className='meta';
-  if(s.eval){ const b=document.createElement('span'); b.className='badge eval'; b.textContent='Evaluación'; right.appendChild(b); }
-  const p=document.createElement('span'); p.className='badge points'; p.textContent=`${s.points} pts`; right.appendChild(p);
-  hdr.append(left,right);
+  
+  const right = document.createElement('div'); 
+  right.className = 'meta';
+  if (s.eval) { 
+    const badge = document.createElement('span'); 
+    badge.className = 'badge eval'; 
+    badge.textContent = 'Evaluación'; 
+    right.appendChild(badge); 
+  }
+  const points = document.createElement('span'); 
+  points.className = 'badge points'; 
+  points.textContent = `${s.points} pts`; 
+  right.appendChild(points);
+  
+  hdr.append(left, right);
 
-  const act=document.createElement('div'); act.className='muted'; act.textContent = s.activity || '—'; pad.appendChild(act);
+  const act = document.createElement('div'); 
+  act.className = 'muted'; 
+  act.textContent = s.activity || '—'; 
+  pad.appendChild(act);
 
-  const actions=document.createElement('div'); actions.className='actions'; pad.appendChild(actions);
-  if((s.videos||[]).length){
-    const btnV=document.createElement('button'); btnV.className='btn primary small'; btnV.textContent='Ver videos';
-    btnV.addEventListener('click',()=> openVideoPicker(unit,s));
+  const actions = document.createElement('div'); 
+  actions.className = 'actions'; 
+  pad.appendChild(actions);
+  
+  if ((s.videos || []).length) {
+    const btnV = document.createElement('button'); 
+    btnV.className = 'btn primary small'; 
+    btnV.innerHTML = '<span aria-hidden="true">🎬</span> Ver videos';
+    btnV.addEventListener('click', () => openVideoPicker(s));
     actions.appendChild(btnV);
   }
-  const btnIA=document.createElement('button'); btnIA.className='btn small'; btnIA.textContent='Apoyo con IA';
-  btnIA.addEventListener('click',()=> openIA(unit,s));
+  
+  const btnIA = document.createElement('button'); 
+  btnIA.className = 'btn small'; 
+  btnIA.innerHTML = '<span aria-hidden="true">🤖</span> Apoyo con IA';
+  btnIA.addEventListener('click', () => openIA(s));
   actions.appendChild(btnIA);
+  
+  // Mark as completed button
+  const completed = isSessionCompleted(s);
+  const btnComplete = document.createElement('button');
+  btnComplete.className = `btn small ${completed ? 'success' : ''}`;
+  btnComplete.innerHTML = completed ? '<span aria-hidden="true">✅</span> Completada' : '<span aria-hidden="true">☑️</span> Marcar como completada';
+  btnComplete.addEventListener('click', () => toggleSessionComplete(s, btnComplete));
+  actions.appendChild(btnComplete);
 
-  if((s.readings||[]).length || (s.glossary||[]).length){
-    const wrap=document.createElement('div'); wrap.className='accordion'; pad.appendChild(wrap);
-    if((s.readings||[]).length){
-      const det=document.createElement('details');
-      const sum=document.createElement('summary'); sum.textContent='Lecturas sugeridas (PDF / enlaces)'; det.appendChild(sum);
-      const body=document.createElement('div'); body.className='acc-body';
-      body.innerHTML = (s.readings||[]).map(r=>`<div><a target="_blank" rel="noopener" href="${r.url}">• ${r.label}</a></div>`).join('');
-      det.appendChild(body); wrap.appendChild(det);
+  if ((s.readings || []).length || (s.glossary || []).length) {
+    const wrap = document.createElement('div'); 
+    wrap.className = 'accordion'; 
+    pad.appendChild(wrap);
+    
+    if ((s.readings || []).length) {
+      const det = document.createElement('details');
+      const sum = document.createElement('summary'); 
+      sum.innerHTML = '<span aria-hidden="true">📚</span> Lecturas sugeridas (PDF / enlaces)'; 
+      det.appendChild(sum);
+      const body = document.createElement('div'); 
+      body.className = 'acc-body';
+      body.innerHTML = (s.readings || []).map(r => `<div style="margin-bottom: 8px;"><a target="_blank" rel="noopener" href="${r.url}">${r.label}</a></div>`).join('');
+      det.appendChild(body); 
+      wrap.appendChild(det);
     }
-    if((s.glossary||[]).length){
-      const det=document.createElement('details');
-      const sum=document.createElement('summary'); sum.textContent='Glosario de la sesión'; det.appendChild(sum);
-      const body=document.createElement('div'); body.className='acc-body';
-      body.innerHTML = `<ul style="margin:0 0 0 18px">${(s.glossary||[]).map(g=>`<li>${g}</li>`).join('')}</ul>`;
-      det.appendChild(body); wrap.appendChild(det);
+    
+    if ((s.glossary || []).length) {
+      const det = document.createElement('details');
+      const sum = document.createElement('summary'); 
+      sum.innerHTML = '<span aria-hidden="true">📖</span> Glosario de la sesión'; 
+      det.appendChild(sum);
+      const body = document.createElement('div'); 
+      body.className = 'acc-body';
+      body.innerHTML = `<ul style="margin:0; padding-left: 20px;">${(s.glossary || []).map(g => `<li>${g}</li>`).join('')}</ul>`;
+      det.appendChild(body); 
+      wrap.appendChild(det);
     }
   }
+  
   return card;
+}
+
+function isSessionCompleted(s) {
+  // Check if all videos are watched or session is marked as completed
+  const videoKeys = (s.videos || []).map((_, i) => uid(s.unitId, s.date, i));
+  const allVideosWatched = videoKeys.length > 0 && videoKeys.every(key => progress[key]);
+  return progress[`session-${s.unitId}-${s.date}`] || allVideosWatched;
+}
+
+function toggleSessionComplete(s, button) {
+  const sessionKey = `session-${s.unitId}-${s.date}`;
+  
+  if (progress[sessionKey]) {
+    delete progress[sessionKey];
+    button.innerHTML = '<span aria-hidden="true">☑️</span> Marcar como completada';
+    button.classList.remove('success');
+    showNotification('Sesión marcada como no completada');
+  } else {
+    progress[sessionKey] = true;
+    button.innerHTML = '<span aria-hidden="true">✅</span> Completada';
+    button.classList.add('success');
+    showNotification('Sesión marcada como completada');
+  }
+  
+  saveProgress(progress);
+  updateProgressMeter();
 }
 
 // ======================
 // Video modal y picker (2 videos por sesión)
 // ======================
-const videoModal=document.getElementById('videoModal');
-const videoFrame=document.getElementById('videoFrame');
-const videoTitle=document.getElementById('videoTitle');
-const closeModal=document.getElementById('closeModal');
+const videoModal = document.getElementById('videoModal');
+const videoFrame = document.getElementById('videoFrame');
+const videoTitle = document.getElementById('videoTitle');
+const closeModal = document.getElementById('closeModal');
 
-function openVideoPicker(unit,s){
-  // Si hay dos videos, primero mostramos un mini selector sencillo
-  if((s.videos||[]).length>1){
-    const chooser = document.createElement('div');
-    chooser.style.padding='10px 12px';
-    chooser.style.background='#fff';
-    chooser.style.border='1px solid var(--border)';
-    chooser.style.borderRadius='10px';
-    chooser.style.marginBottom='8px';
-    chooser.innerHTML = `<strong>Selecciona un video:</strong> ` +
-      s.videos.map((v,i)=>`<button class="btn small" data-i="${i}" style="margin:6px 6px 0 0">${v.label||('Video '+(i+1))}</button>`).join('');
-
-    // Mostramos modal vacío y metemos el chooser arriba del iframe temporalmente
-    videoTitle.textContent = s.title;
-    videoFrame.src = '';
-    videoModal.classList.add('open');
+function openVideoPicker(s) {
+  videoTitle.textContent = s.title;
+  
+  if ((s.videos || []).length > 1) {
+    // Create video selection interface
     const body = videoModal.querySelector('.modal-body');
-    body.style.paddingTop='0';
-    body.innerHTML = '';
-    const wrap = document.createElement('div'); wrap.style.background='#111'; wrap.style.color:'#fff'; wrap.style.padding='8px 12px'; wrap.textContent = ' '; // separador visual
-    body.appendChild(chooser);
-    body.appendChild(wrap);
-    const frame = document.createElement('iframe'); frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'; frame.allowFullscreen=true; frame.style.width='100%'; frame.style.height='60vh'; frame.style.border='0'; body.appendChild(frame);
-
-    chooser.querySelectorAll('button').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const i=Number(btn.dataset.i);
-        frame.src = s.videos[i].embed;
-        markSeen(unit,s,i);
+    body.innerHTML = `
+      <div class="video-chooser">
+        ${s.videos.map((video, i) => `
+          <button class="video-option" data-i="${i}">
+            <strong>${video.label}</strong>
+          </button>
+        `).join('')}
+      </div>
+    `;
+    
+    videoModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    
+    // Add event listeners to video options
+    body.querySelectorAll('.video-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = Number(btn.dataset.i);
+        playVideo(s, i);
       });
     });
-  }else{
-    openVideo(unit,s,0);
+  } else {
+    playVideo(s, 0);
   }
 }
 
-function openVideo(unit,s,i=0){
+function playVideo(s, i) {
   videoTitle.textContent = s.title;
-  videoFrame.src = (s.videos[i]||{}).embed || '';
+  videoFrame.src = (s.videos[i] || {}).embed || '';
+  
+  // Reset modal body to standard iframe layout
+  const body = videoModal.querySelector('.modal-body');
+  body.innerHTML = '<iframe id="videoFrame" src="" title="Video de la sesión" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  videoFrame.src = (s.videos[i] || {}).embed || '';
+  
   videoModal.classList.add('open');
-  markSeen(unit,s,i);
+  document.body.style.overflow = 'hidden';
+  
+  markSeen(s, i);
 }
 
-function markSeen(unit,s,i){
-  const id = uid(unit.id, s.date, i);
+function markSeen(s, i) {
+  const id = uid(s.unitId, s.date, i);
   progress[id] = true;
   saveProgress(progress);
   updateProgressMeter();
+  
+  // Check if all videos in session are now watched
+  const videoKeys = (s.videos || []).map((_, idx) => uid(s.unitId, s.date, idx));
+  if (videoKeys.every(key => progress[key])) {
+    progress[`session-${s.unitId}-${s.date}`] = true;
+    saveProgress(progress);
+    renderSessions(); // Refresh to update completion status
+  }
 }
 
-closeModal.addEventListener('click',()=>{
+closeModal.addEventListener('click', () => {
   videoModal.classList.remove('open');
-  // limpiar iframe para detener reproducción
-  videoFrame.src='';
-  const body = videoModal.querySelector('.modal-body');
-  body.innerHTML = '<iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  document.body.style.overflow = '';
+  videoFrame.src = '';
+});
+
+// Close modal when clicking outside
+videoModal.addEventListener('click', (e) => {
+  if (e.target === videoModal) {
+    closeModal.click();
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && videoModal.classList.contains('open')) {
+    closeModal.click();
+  }
 });
 
 // ======================
 // Apoyo con IA (NotebookLM + Adam Smith)
 // ======================
-function openIA(unit,s){
+function openIA(s) {
   const win = window.open('', '_blank');
-  if(!win){ alert('Permite ventanas emergentes para abrir los recursos IA.'); return; }
-  win.document.write(`<!DOCTYPE html><html lang=es><head><meta charset=utf-8><title>Apoyo con IA — ${s.title}</title></head><body style="font-family:system-ui;line-height:1.5;padding:16px"><h2>Apoyo con IA</h2><p>Usa estos recursos como complemento. Verifica siempre en fuentes académicas.</p><p><a href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e" target="_blank" rel="noopener">Abrir NotebookLM</a> · <a href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs" target="_blank" rel="noopener">Habla con Adam Smith</a></p><h3>Prompts sugeridos</h3><ul><li>Resume en 120 palabras los puntos clave de: ${s.title}.</li><li>Genera 3 preguntas para debate sobre: ${s.activity||'la sesión'}.</li></ul><p><a href="javascript:window.close()">Cerrar</a></p></body></html>`);
+  if (!win) { 
+    showNotification('Permite ventanas emergentes para abrir los recursos IA.', 'error');
+    return; 
+  }
+  
+  win.document.write(`
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+      <meta charset="utf-8">
+      <title>Apoyo con IA — ${s.title}</title>
+      <style>
+        body { font-family: system-ui, sans-serif; line-height: 1.5; padding: 20px; max-width: 600px; margin: 0 auto; }
+        h2 { color: #1877F2; }
+        a { color: #1877F2; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+      </style>
+    </head>
+    <body>
+      <h2>Apoyo con IA</h2>
+      <p>Usa estos recursos como complemento. Verifica siempre en fuentes académicas.</p>
+      <p>
+        <a href="https://notebooklm.google.com/notebook/b799964b-6062-44b9-b87b-d5de6c4ae05e" target="_blank" rel="noopener">📚 Abrir NotebookLM</a> · 
+        <a href="https://character.ai/chat/FCgmgPz6U_pITNY6aqdriS_Kxy624R5GdiPVgpsgVPs" target="_blank" rel="noopener">💬 Habla con Adam Smith</a>
+      </p>
+      <h3>Prompts sugeridos para "${s.title}"</h3>
+      <ul>
+        <li>Resume en 120 palabras los puntos clave de: ${s.title}.</li>
+        <li>Genera 3 preguntas para debate sobre: ${s.activity || 'la sesión'}.</li>
+        <li>Explica la relación entre: ${s.glossary.slice(0, 2).join(' y ')}.</li>
+        <li>¿Cuál es la importancia de ${s.glossary[0] || 'este tema'} en la economía actual?</li>
+      </ul>
+      <p><button onclick="window.close()">Cerrar</button></p>
+    </body>
+    </html>
+  `);
 }
 
 // ======================
 // Timeline
 // ======================
-function renderTimeline(){
-  const tl=document.getElementById('timeline');
-  tl.innerHTML='';
-  DATA.milestones.forEach(m=>{
-    const a=document.createElement('a'); a.className='dot '+(m.type==='final'?'eval':''); a.href='#programa'; a.textContent=`${fmtDate(m.date)} · ${m.label}`; tl.appendChild(a);
+function renderTimeline() {
+  const tl = document.getElementById('timeline');
+  tl.innerHTML = '';
+  
+  DATA.milestones.forEach(m => {
+    const item = document.createElement('a');
+    item.className = `dot ${m.type === 'final' ? 'eval' : ''}`;
+    item.href = '#programa';
+    item.innerHTML = `${fmtDate(m.date)} · ${m.label}`;
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Filter sessions to show only evaluation sessions
+      currentUnit = "all";
+      unitFilter.value = "all";
+      document.getElementById('q').value = m.label;
+      renderTabs();
+      renderSessions();
+      window.scrollTo({ top: document.getElementById('programa').offsetTop - 80, behavior: 'smooth' });
+    });
+    tl.appendChild(item);
   });
 }
 
 // ======================
 // Progreso
 // ======================
-function countTotalVideos(){
-  let total=0; DATA.units.forEach(u=>u.sessions.forEach(s=> total += (s.videos||[]).length)); return total;
+function countTotalSessions() {
+  let total = 0;
+  DATA.units.forEach(u => total += u.sessions.length);
+  return total;
 }
-function countSeen(){
-  return Object.values(progress).filter(Boolean).length;
+
+function countCompletedSessions() {
+  let completed = 0;
+  
+  DATA.units.forEach(u => {
+    u.sessions.forEach(s => {
+      if (isSessionCompleted(s)) {
+        completed++;
+      }
+    });
+  });
+  
+  return completed;
 }
-function updateProgressMeter(){
-  const total=countTotalVideos();
-  const seen=countSeen();
-  document.getElementById('progressLabel').textContent = `${seen}/${total} videos vistos`;
-  const pct = total? Math.round((seen/total)*100) : 0;
-  document.getElementById('meterFill').style.width = pct+'%';
+
+function updateProgressMeter() {
+  const total = countTotalSessions();
+  const completed = countCompletedSessions();
+  document.getElementById('progressLabel').textContent = `${completed}/${total} sesiones completadas`;
+  const pct = total ? Math.round((completed / total) * 100) : 0;
+  document.getElementById('meterFill').style.width = pct + '%';
+}
+
+function resetProgress() {
+  if (confirm('¿Estás seguro de que quieres reiniciar todo tu progreso? Esta acción no se puede deshacer.')) {
+    progress = {};
+    saveProgress(progress);
+    renderSessions();
+    updateProgressMeter();
+    showNotification('Progreso reiniciado correctamente');
+  }
 }
 
 // ======================
-// Búsqueda
+// Búsqueda y Filtros
 // ======================
-const inputQ=document.getElementById('q');
-const btnClear=document.getElementById('btnClear');
-inputQ.addEventListener('input', ()=> renderSessions());
-btnClear.addEventListener('click', ()=>{ inputQ.value=''; renderSessions(); });
+const inputQ = document.getElementById('q');
+const btnClear = document.getElementById('btnClear');
+
+function setupSearch() {
+  inputQ.addEventListener('input', () => renderSessions());
+  
+  btnClear.addEventListener('click', () => {
+    inputQ.value = '';
+    renderSessions();
+  });
+  
+  // Debounce search to improve performance
+  let timeout;
+  inputQ.addEventListener('input', () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => renderSessions(), 300);
+  });
+  
+  unitFilter.addEventListener('change', () => {
+    currentUnit = unitFilter.value;
+    renderTabs();
+    renderSessions();
+  });
+  
+  sortFilter.addEventListener('change', () => {
+    renderSessions();
+  });
+}
+
+// ======================
+// Tema oscuro/claro
+// ======================
+function setupThemeToggle() {
+  const themeToggle = document.getElementById('themeToggle');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  // Check for saved theme preference or use OS preference
+  if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark)) {
+    document.documentElement.classList.add('dark-mode');
+    themeToggle.innerHTML = '<span aria-hidden="true">☀️</span>';
+    themeToggle.setAttribute('aria-label', 'Cambiar a modo claro');
+  } else {
+    themeToggle.innerHTML = '<span aria-hidden="true">🌙</span>';
+    themeToggle.setAttribute('aria-label', 'Cambiar a modo oscuro');
+  }
+  
+  themeToggle.addEventListener('click', () => {
+    if (document.documentElement.classList.contains('dark-mode')) {
+      document.documentElement.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
+      themeToggle.innerHTML = '<span aria-hidden="true">🌙</span>';
+      themeToggle.setAttribute('aria-label', 'Cambiar a modo oscuro');
+    } else {
+      document.documentElement.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark');
+      themeToggle.innerHTML = '<span aria-hidden="true">☀️</span>';
+      themeToggle.setAttribute('aria-label', 'Cambiar a modo claro');
+    }
+  });
+}
 
 // ======================
 // Init
 // ======================
-renderTabs();
-renderSessions();
-renderTimeline();
-updateProgressMeter();
+function init() {
+  renderUnitFilter();
+  renderTabs();
+  renderSessions();
+  renderTimeline();
+  updateProgressMeter();
+  setupSearch();
+  setupThemeToggle();
+  
+  // Event listeners
+  document.getElementById('resetProgress').addEventListener('click', resetProgress);
+  
+  // Improve keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && e.target !== inputQ) {
+      e.preventDefault();
+      inputQ.focus();
+    }
+  });
+}
 
+// Start the app when DOM is loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 </script>
 </body>
 </html>
